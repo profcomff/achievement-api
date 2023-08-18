@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     CORS_ALLOW_METHODS: list[str] = ["*"]
     CORS_ALLOW_HEADERS: list[str] = ["*"]
 
-    STATIC_FOLDER: DirectoryPath = "/Users/dyakovri/Desktop/profcomff/achievement/achievement_api/static"
+    STATIC_FOLDER: DirectoryPath = "./static"
 
     model_config = ConfigDict(case_sensitive=True, env_file=".env", extra="ignore")
 

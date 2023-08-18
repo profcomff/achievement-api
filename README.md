@@ -23,4 +23,7 @@
     ```
 
 ## ENV-file description
-- `DB_DSN=postgresql://postgres@localhost:5432/postgres` – Данные для подключения к БД
+```env
+DB_DSN=postgresql://postgres@localhost:5432/postgres  # Данные для подключения к БД
+STATIC_FOLDER=/home/myuser/Desktop.static  # Путь к папочке, куда будут картинки загружаться
+```
