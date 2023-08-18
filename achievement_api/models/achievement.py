@@ -12,12 +12,12 @@ class Achievement(Base):
     id: Mapped[int] = mapped_column(sa.Integer, primary_key=True)
     name: Mapped[str] = mapped_column(sa.String)
     description: Mapped[str] = mapped_column(sa.String)
-    picture: Mapped[str] = mapped_column(sa.String)
+    picture: Mapped[str] = mapped_column(sa.String, nullable=True)
     owner_user_id: Mapped[int] = mapped_column(sa.Integer)
     create_ts: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.utcnow)
     update_ts: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    recievers: Mapped[AchievementReciever] = relationship(back_populates='achievement')
+    recievers: Mapped[list[AchievementReciever]] = relationship(back_populates='achievement')
 
 
 class AchievementReciever(Base):

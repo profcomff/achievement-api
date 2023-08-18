@@ -5,6 +5,9 @@ from fastapi_sqlalchemy import DBSessionMiddleware
 from achievement_api import __version__
 from achievement_api.settings import get_settings
 
+from .achievement import router as achievement_router
+from .reciever import router as reciever_router
+
 
 settings = get_settings()
 app = FastAPI(
@@ -31,3 +34,6 @@ app.add_middleware(
     allow_methods=settings.CORS_ALLOW_METHODS,
     allow_headers=settings.CORS_ALLOW_HEADERS,
 )
+
+app.include_router(achievement_router)
+app.include_router(reciever_router)
