@@ -1,7 +1,7 @@
 import os
 from functools import lru_cache
 
-from pydantic import ConfigDict, PostgresDsn
+from pydantic import ConfigDict, DirectoryPath, PostgresDsn
 from pydantic_settings import BaseSettings
 
 
@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     CORS_ALLOW_CREDENTIALS: bool = True
     CORS_ALLOW_METHODS: list[str] = ["*"]
     CORS_ALLOW_HEADERS: list[str] = ["*"]
+
+    STATIC_FOLDER: DirectoryPath = "/Users/dyakovri/Desktop/profcomff/achievement/achievement_api/static"
 
     model_config = ConfigDict(case_sensitive=True, env_file=".env", extra="ignore")
 

@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi_sqlalchemy import DBSessionMiddleware
 
 from achievement_api import __version__
@@ -37,3 +38,4 @@ app.add_middleware(
 
 app.include_router(achievement_router)
 app.include_router(reciever_router)
+app.mount('/static', StaticFiles(directory=settings.STATIC_FOLDER))

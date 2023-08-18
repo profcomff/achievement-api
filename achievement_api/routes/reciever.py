@@ -19,10 +19,8 @@ def get_all_recievers(achievement_id: int):
 @router.post("/{user_id}")
 def create_reciever(achievement_id: int, user_id: int, user=Depends(UnionAuth(['achievements.achievement.give']))):
     """Нужны права на: `achievements.achievement.give`"""
-    pass
 
 
 @router.delete("/{user_id}")
 def revoke_reciever(achievement_id: int, user_id: int, user=Depends(UnionAuth(['achievements.achievement.revoke']))):
     """Нужны права на: `achievements.achievement.revoke`"""
-    pass
