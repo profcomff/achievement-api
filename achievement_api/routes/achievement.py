@@ -70,6 +70,7 @@ def edit_achievement(
     logger.info(f"User id={user['id']} edit achievement {new_data.name} ({achievement.name})")
     achievement.name = new_data.name or achievement.name
     achievement.description = new_data.description or achievement.description
+    db.session.commit()
     return achievement
 
 
