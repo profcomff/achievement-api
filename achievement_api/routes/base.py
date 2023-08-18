@@ -8,6 +8,7 @@ from achievement_api.settings import get_settings
 
 from .achievement import router as achievement_router
 from .reciever import router as reciever_router
+from .user import router as user_router
 
 
 settings = get_settings()
@@ -38,4 +39,5 @@ app.add_middleware(
 
 app.include_router(achievement_router)
 app.include_router(reciever_router)
+app.include_router(user_router)
 app.mount('/static', StaticFiles(directory=settings.STATIC_FOLDER))
