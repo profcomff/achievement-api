@@ -16,19 +16,12 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 
-class RecieverGet(BaseModel):
-    user_id: int
-
-    model_config = ConfigDict(from_attributes=True)
-
-
 class AchievementGet(BaseModel):
     id: int
     name: str
     description: str
     picture: str | None
     owner_user_id: int
-    recievers: list[RecieverGet]
 
     model_config = ConfigDict(from_attributes=True)
 
