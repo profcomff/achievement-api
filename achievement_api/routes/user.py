@@ -1,7 +1,6 @@
 import logging
 
-from auth_lib.fastapi import UnionAuth
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel, ConfigDict
 
@@ -33,5 +32,7 @@ class UserGet(BaseModel):
 
 @router.get("/{user_id}")
 def get_all_achievements(user_id: int) -> UserGet:
-    achievements = db.session.query(Achievement).join(AchievementReciever).where(AchievementReciever.user_id == user_id).all()
+    achievements = (
+        db.session.query(Achievement).join(AchievementReciever).where(AchievementReciever.user_id == user_id).all()
+    )
     return UserGet(user_id=user_id, achievement=achievements)
