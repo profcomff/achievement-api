@@ -17,7 +17,7 @@ app = FastAPI(
     description='Программный интерфейс ачивок для Твой ФФ!',
     version=__version__,
     # Отключаем нелокальную документацию
-    root_path=settings.ROOT_PATH if __version__ != 'dev' else '/',
+    root_path=settings.ROOT_PATH if __version__ != 'dev' else '',
     docs_url=None if __version__ != 'dev' else '/docs',
     redoc_url=None,
 )
