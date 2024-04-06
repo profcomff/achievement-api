@@ -8,9 +8,9 @@ venv:
 	python3.11 -m venv venv
 
 format:
-	autoflake -r --in-place --remove-all-unused-imports ./achievement_api
-	isort ./achievement_api
-	black ./achievement_api
+	source ./venv/bin/activate && autoflake -r --in-place --remove-all-unused-imports ./achievement_api
+	source ./venv/bin/activate && isort ./achievement_api
+	source ./venv/bin/activate && black ./achievement_api
 	source ./venv/bin/activate && autoflake -r --in-place --remove-all-unused-imports ./tests
 	source ./venv/bin/activate && isort ./tests
 	source ./venv/bin/activate && black ./tests
