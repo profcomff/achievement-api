@@ -11,6 +11,12 @@ format:
 	autoflake -r --in-place --remove-all-unused-imports ./achievement_api
 	isort ./achievement_api
 	black ./achievement_api
+	source ./venv/bin/activate && autoflake -r --in-place --remove-all-unused-imports ./tests
+	source ./venv/bin/activate && isort ./tests
+	source ./venv/bin/activate && black ./tests
+	source ./venv/bin/activate && autoflake -r --in-place --remove-all-unused-imports ./migrations
+	source ./venv/bin/activate && isort ./migrations
+	source ./venv/bin/activate && black ./migrations
 
 db:
 	docker run -d -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust --name db-achievement_api postgres:15
