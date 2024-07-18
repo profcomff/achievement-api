@@ -92,3 +92,15 @@ async def upload_picture(
     achievement.picture = f'static/{id}.png'
     db.session.commit()
     return achievement
+
+
+@router.delete("/{id}")
+def delete_achievement(id: int, user=Depends(UnionAuth(['achievements.achievement.create']))) -> AchievementGet:
+    """Нужны права на: `achievements.achievement.create`"""
+    achievement: Achievement | None = db.session.query(Achievement).get(id)
+    if not achievement:
+        raise HTTPException(404, f"No such achievment id={id} found")
+    logger.info(f"User id={user['id']} delete achievement {achievement.name}")
+    db.session.delete(achievement)
+    db.session.commit()
+    return achievement
