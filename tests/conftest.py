@@ -23,24 +23,9 @@ def dbsession():
 
 @pytest.fixture
 def achievement(dbsession):
-    """
-    Вызов фабрики создает ачивку
-    ```
-    def test(achievement):
-        achievement1 = achievement()
-        achievement2 = achievement()
-    ```
-    """
-    achievements = []
-
-    def _achievement():
-        nonlocal achievements
-        name = "Test achievement"
-        owner_id = 1
-        __achievement = Achievement(name=name, description="", owner_user_id=owner_id)
-        dbsession.add(__achievement)
-        dbsession.commit()
-        achievements.append(__achievement)
-        return __achievement
-
-    yield _achievement
+    name = "Test achievement"
+    owner_id = 1
+    achievement = Achievement(name=name, description="", owner_user_id=owner_id)
+    dbsession.add(achievement)
+    dbsession.commit()
+    yield achievement
