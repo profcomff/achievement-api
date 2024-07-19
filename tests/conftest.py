@@ -14,19 +14,15 @@ def client():
 
 
 @pytest.fixture(scope='session')
-def dbsessionGen():
-
-    def _dbsession():
-        settings = get_settings()
-        engine = create_engine(str(settings.DB_DSN))
-        TestingSessionLocal = sessionmaker(bind=engine)
-        return TestingSessionLocal()
-
-    yield _dbsession
+def dbsession():
+    settings = get_settings()
+    engine = create_engine(str(settings.DB_DSN))
+    TestingSessionLocal = sessionmaker(bind=engine)
+    yield TestingSessionLocal()
 
 
 @pytest.fixture
-def achievement(dbsessionGen):
+def achievement(dbsession):
     """
     Вызов фабрики создает ачивку
     ```
@@ -36,7 +32,6 @@ def achievement(dbsessionGen):
     ```
     """
     achievements = []
-    dbsession = dbsessionGen()
 
     def _achievement():
         nonlocal achievements
