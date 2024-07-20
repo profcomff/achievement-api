@@ -22,10 +22,6 @@ def dbsession():
 
 
 @pytest.fixture
-def achievement(dbsession):
-    name = "Test achievement"
-    owner_id = 1
-    achievement = Achievement(name=name, description="", owner_user_id=owner_id)
-    dbsession.add(achievement)
-    dbsession.commit()
-    yield achievement
+def achievement_id(client):
+    post_response = client.post("/achievement", json={"name": "test name", "description": "test description"})
+    yield post_response.json()["id"]
