@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from achievement_api.models.achievement import Achievement
 from achievement_api.routes.base import app
 from achievement_api.settings import get_settings
 
