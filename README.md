@@ -2,6 +2,8 @@
 
 Программный интерфейс ачивок для Твой ФФ!
 
+[<img src="https://cdn.profcomff.com/easycode/easycode.svg" width="200"></img>](https://easycode.profcomff.com/templates/docker-fastapi/workspace?mode=manual&param.Repository+URL=https://github.com/profcomff/achievement-api.git&param.Working+directory=achievement-api)
+
 ## Запуск
 
 1. Перейдите в папку проекта
