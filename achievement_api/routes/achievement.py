@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi_sqlalchemy import db
 from pydantic import BaseModel, ConfigDict
 
+from achievement_api.base import StatusResponseModel
 from achievement_api.models import Achievement
 from achievement_api.settings import get_settings
 from achievement_api.utils.image import get_image_dimensions
@@ -94,13 +95,13 @@ async def upload_picture(
     return achievement
 
 
-@router.delete("/{id}", response_model=AchievementGet)
-def delete_achievement(id: int, user=Depends(UnionAuth(['achievements.achievement.delete']))) -> AchievementGet:
+@router.delete("/{id}", response_model=StatusResponseModel)
+def delete_achievement(id: int, user=Depends(UnionAuth(['achievements.achievement.delete']))) -> StatusResponseModel:
     """Нужны права на: `achievements.achievement.delete`"""
     achievement: Achievement | None = db.session.get(Achievement, id)
-    if not achievement:
+    if achievement is None:
         raise HTTPException(404, f"Achievement id={id} not found")
     logger.info(f"User id={user['id']} has deleted achievement {achievement.name}")
     db.session.delete(achievement)
     db.session.commit()
-    return achievement
+    return StatusResponseModel(status="Success", message=f"Achievement id={id} has been deleted", ru="Ачивка удалена")
