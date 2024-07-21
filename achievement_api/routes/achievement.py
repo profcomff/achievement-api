@@ -100,8 +100,8 @@ def delete_achievement(id: int, user=Depends(UnionAuth(['achievements.achievemen
     """Нужны права на: `achievements.achievement.delete`"""
     achievement: Achievement | None = db.session.get(Achievement, id)
     if achievement is None:
-        raise HTTPException(404, f"Achievement id={id} not found")
+        raise HTTPException(404, f"Achievement {id=} not found")
     logger.info(f"User id={user['id']} has deleted achievement {achievement.name}")
     db.session.delete(achievement)
     db.session.commit()
-    return StatusResponseModel(status="Success", message=f"Achievement id={id} has been deleted", ru="Ачивка удалена")
+    return StatusResponseModel(status="Success", message=f"Achievement {id=} has been deleted", ru="Ачивка удалена")
