@@ -44,7 +44,7 @@ def get_all_achievements() -> list[AchievementGet]:
 @router.get("/{id}")
 def get_achievement(id: int) -> AchievementGet:
     if db.session.query(Achievement).filter(Achievement.id == id).one_or_none() == None:
-        raise HTTPException(400, "Not valid image, should be png 512x512px")
+        raise HTTPException(404, "The achievement was not found")
     return db.session.query(Achievement).get(id)
 
 
@@ -69,7 +69,7 @@ def edit_achievement(
 ) -> AchievementGet:
     """Нужны права на: `achievements.achievement.edit`"""
     if db.session.query(Achievement).filter(Achievement.id == id).one_or_none() == None:
-        raise HTTPException(400, "Not valid image, should be png 512x512px")
+        raise HTTPException(404, "The achievement was not found")
     achievement: Achievement = db.session.query(Achievement).get(id)
     logger.info(f"User id={user['id']} edit achievement {new_data.name} ({achievement.name})")
     achievement.name = new_data.name or achievement.name
@@ -85,7 +85,7 @@ async def upload_picture(
     user=Depends(UnionAuth(['achievements.achievement.create', 'achievements.achievement.edit'])),
 ) -> AchievementGet:
     if db.session.query(Achievement).filter(Achievement.id == id).one_or_none() == None:
-        raise HTTPException(400, "Not valid image, should be png 512x512px")
+        raise HTTPException(404, "The achievement was not found")
     achievement: Achievement = db.session.query(Achievement).get(id)
     logger.info(f"User id={user['id']} uploaded photo for achievement {achievement.name}")
     picture = await picture_file.read()
