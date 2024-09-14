@@ -44,7 +44,10 @@ def get_all_achievements() -> list[AchievementGet]:
 
 @router.get("/{id}")
 def get_achievement(id: int) -> AchievementGet:
-    return db.session.query(Achievement).get(id)
+    achievement = db.session.query(Achievement).filter(Achievement.id == id)
+    if achievement is None:
+        raise HTTPException(404, "The achievement was not found")
+    return achievement
 
 
 @router.post("")
@@ -68,6 +71,8 @@ def edit_achievement(
 ) -> AchievementGet:
     """Нужны права на: `achievements.achievement.edit`"""
     achievement: Achievement = db.session.query(Achievement).get(id)
+    if achievement is None:
+        raise HTTPException(404, "The achievement was not found")
     logger.info(f"User id={user['id']} edit achievement {new_data.name} ({achievement.name})")
     achievement.name = new_data.name or achievement.name
     achievement.description = new_data.description or achievement.description
@@ -82,6 +87,8 @@ async def upload_picture(
     user=Depends(UnionAuth(['achievements.achievement.create', 'achievements.achievement.edit'])),
 ) -> AchievementGet:
     achievement: Achievement = db.session.query(Achievement).get(id)
+    if achievement is None:
+        raise HTTPException(404, "The achievement was not found")
     logger.info(f"User id={user['id']} uploaded photo for achievement {achievement.name}")
     picture = await picture_file.read()
     await picture_file.close()
