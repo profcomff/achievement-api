@@ -44,7 +44,7 @@ def get_all_achievements() -> list[AchievementGet]:
 
 @router.get("/{id}")
 def get_achievement(id: int) -> AchievementGet:
-    achievement = db.session.query(Achievement).filter(Achievement.id == id)
+    achievement = db.session.get(Achievement, id)
     if achievement is None:
         raise HTTPException(404, "The achievement was not found")
     return achievement
