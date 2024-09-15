@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from achievement_api.models.achievement import Achievement
 from achievement_api.routes.base import app
 from achievement_api.settings import get_settings
 
@@ -21,6 +22,9 @@ def dbsession():
 
 
 @pytest.fixture
-def achievement_id(client):
+def achievement_id(client, dbsession):
     post_response = client.post("/achievement", json={"name": "test name", "description": "test description"})
-    yield post_response.json()["id"]
+    id = post_response.json()["id"]
+    yield id
+    if dbsession.get(Achievement, id):
+        client.delete(f"/achievement/{id}")
